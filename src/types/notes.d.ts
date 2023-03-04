@@ -8,6 +8,7 @@ export type NoteContextType = {
   notes: INote[];
   activeNoteId: string;
   keyword: string;
+  sortedAndSearchedNotes: INote[] | null;
   createNote: () => void;
   updateNote: (id: string, content: EditorState) => void;
   removeNote: (id: string) => void;

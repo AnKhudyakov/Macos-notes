@@ -36,7 +36,6 @@ function Header() {
   };
 
   const removeCurrentNote = () => {
-    console.log("activeNoteId", activeNoteId);
     removeNote(activeNoteId);
   };
 

@@ -31,7 +31,7 @@ export const NoteProvider = ({ children }: NoteProviderProps) => {
   const [notes, setNotes] = useState<INote[]>(initialNotes);
   const [activeNoteId, setActiveNoteId] = useState<string>("");
   const [keyword, setKeyword] = useState<string>("");
-  const [cacheResult, setCacheResult] = useState<null | INote[]>(null);
+  const [sortedAndSearchedNotes, setSortedAndSearchedNotes] = useState<null | INote[]>(null);
 
   const createNote = () => {
     const newNote: INote = {
@@ -80,12 +80,10 @@ export const NoteProvider = ({ children }: NoteProviderProps) => {
       setKeyword(keyword);
       const sortedNotes = getSortedNotes(notes);
       const filteredResult = filterNotes(sortedNotes, keyword);
-      console.log("FILTERED",filteredResult)
-      setCacheResult(filteredResult);
-      setNotes([...filteredResult]);
+      setSortedAndSearchedNotes(filteredResult);;
     } else {
       setKeyword("");
-      setCacheResult(null);
+      setSortedAndSearchedNotes(null);
     }
   };
 
@@ -108,6 +106,7 @@ export const NoteProvider = ({ children }: NoteProviderProps) => {
         notes,
         activeNoteId,
         keyword,
+        sortedAndSearchedNotes,
         createNote,
         updateNote,
         removeNote,

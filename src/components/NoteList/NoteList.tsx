@@ -5,9 +5,11 @@ import { NoteContext } from '../../context';
 import { NoteContextType, INote } from "../../types/notes";
 import { useContext } from "react";
 
+const sortNotes = (notes:INote[]) => notes.sort((n1, n2) => n2.updatedAt - n1.updatedAt);
+
 function NoteList() {
 
-  const { notes } = useContext(NoteContext) as NoteContextType;
+  const { notes,keyword,sortedAndSearchedNotes } = useContext(NoteContext) as NoteContextType;
   
   return (
     <Box
@@ -22,7 +24,8 @@ function NoteList() {
         // },
       }}
     >
-       {notes.map((note)=><NoteItem note={note} key={note.id}/>)}
+      {!keyword&&notes.map((note)=><NoteItem note={note} key={note.id}/>)}
+       {sortedAndSearchedNotes&&sortedAndSearchedNotes.map((note)=><NoteItem note={note} key={note.id}/>)}
     </Box>
   );
 }
