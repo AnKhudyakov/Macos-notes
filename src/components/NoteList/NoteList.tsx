@@ -1,31 +1,45 @@
 import Box from "@mui/material/Box";
 import { shades } from "../../theme";
 import NoteItem from "./NoteItem";
-import { NoteContext } from '../../context';
+import { NoteContext } from "../../context";
 import { NoteContextType, INote } from "../../types/notes";
 import { useContext } from "react";
-
-const sortNotes = (notes:INote[]) => notes.sort((n1, n2) => n2.updatedAt - n1.updatedAt);
+import { Typography } from "@mui/material";
 
 function NoteList() {
+  const { notes, keyword, sortedAndSearchedNotes, isListView } = useContext(
+    NoteContext
+  ) as NoteContextType;
 
-  const { notes,keyword,sortedAndSearchedNotes } = useContext(NoteContext) as NoteContextType;
-  
+  console.log(isListView);
+
   return (
     <Box
-    sx={{
-        width: "23%",
+    minWidth= {isListView ? "200px" : "100%"}
+      sx={{
         minHeight: "300px",
-        borderRight: `1px solid ${shades.secondary[600]}`,
-        backgroundColor: "secondary.dark",
-        // "&:hover": {
-        //   backgroundColor: "secondary.main",
-        //   opacity: [0.9, 0.8, 0.7],
-        // },
+        borderRight: isListView ?`1px solid ${shades.secondary[600]}`:"0",
+        borderRadius: isListView ? "0" : "0 0 10px 0",
+        bgcolor: "secondary.dark",
       }}
     >
-      {!keyword&&notes.map((note)=><NoteItem note={note} key={note.id}/>)}
-       {sortedAndSearchedNotes&&sortedAndSearchedNotes.map((note)=><NoteItem note={note} key={note.id}/>)}
+      {!notes.length && (
+        <Typography
+          variant="h2"
+          sx={{
+            color: `${shades.primary[100]}`,
+            textAlign: "center",
+            marginTop: 6,
+          }}
+        >
+          No Notes
+        </Typography>
+      )}
+      {!keyword && notes.map((note) => <NoteItem note={note} key={note.id} />)}
+      {sortedAndSearchedNotes &&
+        sortedAndSearchedNotes.map((note) => (
+          <NoteItem note={note} key={note.id} />
+        ))}
     </Box>
   );
 }

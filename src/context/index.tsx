@@ -3,7 +3,7 @@ import { NoteContextType, INote } from "../types/notes";
 import React, { useState } from "react";
 import { faker } from "@faker-js/faker";
 import { EditorState, ContentState } from "draft-js";
-import { log } from "console";
+import { RichUtils } from "draft-js";
 
 type NoteProviderProps = {
   children: React.ReactNode;
@@ -31,8 +31,11 @@ export const NoteProvider = ({ children }: NoteProviderProps) => {
   const [notes, setNotes] = useState<INote[]>(initialNotes);
   const [activeNoteId, setActiveNoteId] = useState<string>("");
   const [keyword, setKeyword] = useState<string>("");
-  const [sortedAndSearchedNotes, setSortedAndSearchedNotes] = useState<null | INote[]>(null);
-
+  const [sortedAndSearchedNotes, setSortedAndSearchedNotes] = useState<
+    null | INote[]
+  >(null);
+  const [isOpenFormat, setIsOpenFormat] = useState<boolean>(false);
+  const [isListView, setIsListView] = useState<boolean>(true);
   const createNote = () => {
     const newNote: INote = {
       id: faker.datatype.uuid(),
@@ -80,7 +83,7 @@ export const NoteProvider = ({ children }: NoteProviderProps) => {
       setKeyword(keyword);
       const sortedNotes = getSortedNotes(notes);
       const filteredResult = filterNotes(sortedNotes, keyword);
-      setSortedAndSearchedNotes(filteredResult);;
+      setSortedAndSearchedNotes(filteredResult);
     } else {
       setKeyword("");
       setSortedAndSearchedNotes(null);
@@ -100,6 +103,15 @@ export const NoteProvider = ({ children }: NoteProviderProps) => {
     });
   };
 
+  const toggleBlockType = (blockType: string) => {
+    if (!getActive()) return;
+    const note = getActive();
+    if (note) {
+      const nextState = RichUtils.toggleBlockType(note.content, blockType);
+      updateNote(activeNoteId, nextState);
+    }
+  };
+
   return (
     <NoteContext.Provider
       value={{
@@ -107,12 +119,17 @@ export const NoteProvider = ({ children }: NoteProviderProps) => {
         activeNoteId,
         keyword,
         sortedAndSearchedNotes,
+        isOpenFormat,
         createNote,
         updateNote,
         removeNote,
         setActive,
         getActive,
         searchKeyword,
+        setIsOpenFormat,
+        toggleBlockType,
+        isListView,
+        setIsListView,
       }}
     >
       {children}

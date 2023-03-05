@@ -15,7 +15,7 @@ import {
 import { Typography } from "@mui/material";
 
 function NoteEditor() {
-  const { activeNoteId, updateNote, getActive } = useContext(
+  const { activeNoteId, updateNote, getActive ,isListView} = useContext(
     NoteContext
   ) as NoteContextType;
   const note = getActive();
@@ -38,7 +38,7 @@ function NoteEditor() {
     return time;
   }
 
-  const keyBindingFn = (event: any) => {
+  const keyBindingFn = (event:any) => {
     if (KeyBindingUtil.hasCommandModifier(event) && event.keyCode === 66) {
       return "text-bold";
     }
@@ -75,13 +75,16 @@ function NoteEditor() {
 
   return (
     <Box
+    display= {isListView ? "block" : "none"}
       sx={{
-        width: "77%",
-        minHeight: "300px",
+        width:"100%",
+        //minHeight: "300px",
         margin: "0px",
         padding:"10px",
         borderRadius: "0 0 10px 0",
+        bgcolor: "primary.dark",
         color: `${shades.primary[100]}`,
+      
       }}
     >
       <Typography sx={{textAlign: "center"}} >
@@ -91,6 +94,7 @@ function NoteEditor() {
         <EditorContext.Provider value={editorState} key={note?.id}>
           {note&&
           <Editor
+          placeholder="Click here to start typing in the editor..."
             editorState={note.content}
             onChange={onChange}
             keyBindingFn={keyBindingFn}

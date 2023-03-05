@@ -1,43 +1,39 @@
 import Box from "@mui/material/Box";
-import Header from "./Header";
+import Header from "./Header/Header";
 import NoteEditor from "./NoteEditor/NoteEditor";
 import NoteList from "./NoteList/NoteList";
+import { NoteContext } from "../context";
+import { NoteContextType, INote } from "../types/notes";
+import { useContext } from "react";
+import { shades } from "../theme";
 
 function Main() {
+  const { isOpenFormat, setIsOpenFormat } = useContext(
+    NoteContext
+  ) as NoteContextType;
   return (
     <Box
+      onClick={() => (isOpenFormat ? setIsOpenFormat(false) : null)}
       sx={{
         width: "80%",
         height: "80%",
-        //minHeight: 350,
         margin: "50px auto",
-        //padding: "100px",
+        color: `${shades.primary[100]}`,
         borderRadius: "0 10px 10px 0",
-        backgroundColor: "primary.dark",
-        // "&:hover": {
-        //   backgroundColor: "primary.main",
-        //   opacity: [0.9, 0.8, 0.7],
-        // },
       }}
-    >
+    > 
       <Header/>
       <Box
-    sx={{
-        width: "100%",
-        height: "100%",
-        margin: "0px",
-        display:"flex",
-         "&:hover": {
-        //    borderBottom: `1px solid ${shades.secondary[400]}`,
-        //   backgroundColor: "secondary.main",
-        //   opacity: [0.9, 0.8, 0.7],
-         },
-      }}
-    >
-       <NoteList/>
-      <NoteEditor/>
-    </Box>
-     
+        sx={{
+          width: "100%",
+          height: "100%",
+          margin: "0px",
+          display: "flex",
+        }}
+      >
+        <NoteList />
+        <NoteEditor />
+      </Box>
     </Box>
   );
 }

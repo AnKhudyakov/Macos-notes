@@ -1,4 +1,4 @@
-import { shades } from "../theme";
+import { shades } from "../../theme";
 import {
   Box,
   Button,
@@ -11,17 +11,17 @@ import ListIcon from "@mui/icons-material/List";
 import GridViewIcon from "@mui/icons-material/GridView";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
-import TextFormatIcon from "@mui/icons-material/TextFormat";
 import SearchIcon from "@mui/icons-material/Search";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
-import { NoteContext } from "../context";
-import { NoteContextType, INote } from "../types/notes";
+import { NoteContext } from "../../context";
+import { NoteContextType, INote } from "../../types/notes";
 import { useContext, useState } from "react";
+import FormatButton from "./FormatButton";
+import TextFormatIcon from "@mui/icons-material/TextFormat";
 
 function Header() {
   const [focus, setFocus] = useState<boolean>(false);
-
   const {
     activeNoteId,
     keyword,
@@ -29,6 +29,9 @@ function Header() {
     getActive,
     removeNote,
     searchKeyword,
+    isOpenFormat,
+    setIsOpenFormat,
+    setIsListView
   } = useContext(NoteContext) as NoteContextType;
 
   const addNewNote = () => {
@@ -101,6 +104,7 @@ function Header() {
         margin: "0px",
         display: "flex",
         borderRadius: "0 10px 0px 0",
+        bgcolor: "primary.dark",
         "&:hover": {
           borderBottom: `1px solid ${shades.secondary[400]}`,
         },
@@ -108,16 +112,16 @@ function Header() {
     >
       <Box
         sx={{
-          width: "23%",
+          minWidth: "200px",
           margin: "0px",
           display: "flex",
           justifyContent: "space-between",
-          backgroundColor: "secondary.dark",
+          bgcolor: "secondary.dark",
           borderRight: `1px solid ${shades.secondary[600]}`,
         }}
       >
         <Box sx={{ display: "flex" }}>
-          <IconButton>
+          <IconButton onClick={() => setIsListView(true)}>
             <ListIcon
               fontSize="large"
               sx={{
@@ -126,7 +130,7 @@ function Header() {
               }}
             />
           </IconButton>
-          <IconButton //onClick={() => dispatch(setIsCartOpen({}))}
+          <IconButton onClick={() => setIsListView(false)}
           >
             <GridViewIcon
               sx={{
@@ -144,7 +148,7 @@ function Header() {
               color: `${shades.primary[100]}`,
               //   "&:hover": {
               //     borderRadius:2,
-              //     backgroundColor: "secondary.main",
+              //     bgcolor: "secondary.main",
               //     opacity: [0.9, 0.8, 0.7],
               //  },
             }}
@@ -158,9 +162,10 @@ function Header() {
           borderRadius: "0 10px 0 0",
           display: "flex",
           justifyContent: "space-between",
+
         }}
       >
-        <Box>
+        <Box sx={{ textAlign: "center", width: "100%" }}>
           <IconButton onClick={addNewNote}>
             <BorderColorIcon
               fontSize="medium"
@@ -171,7 +176,8 @@ function Header() {
             />
           </IconButton>
           <IconButton
-            sx={{ marginLeft: 5 }}
+            onClick={() => setIsOpenFormat(!isOpenFormat)}
+            sx={{ textAlign: "center" }}
             //onClick={() => dispatch(setIsCartOpen({}))}
           >
             <TextFormatIcon
@@ -182,6 +188,7 @@ function Header() {
               }}
             />
           </IconButton>
+          <FormatButton isOpen={isOpenFormat} />
         </Box>
         <Search>
           <SearchIconWrapper>

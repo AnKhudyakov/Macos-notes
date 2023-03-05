@@ -41,10 +41,10 @@ function NoteItem({ note }: NoteItemProps) {
         margin: 1.5,
         height: "60px",
         borderRadius: 1.5,
-        backgroundColor: "secondary.dark",
+        bgcolor: "secondary.dark",
         "&:hover": {
           cursor: "pointer",
-          backgroundColor: "secondary.main",
+          bgcolor: "secondary.main",
           opacity: [0.9, 0.8, 0.7],
         },
       }}
