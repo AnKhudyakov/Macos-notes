@@ -8,21 +8,22 @@ import { useContext } from "react";
 import { shades } from "../theme";
 
 function Main() {
-  const { isOpenFormat, setIsOpenFormat } = useContext(
+  const { isOpenFormat, setIsOpenFormat, setActive } = useContext(
     NoteContext
   ) as NoteContextType;
   return (
     <Box
       onClick={() => (isOpenFormat ? setIsOpenFormat(false) : null)}
+      height="80vh"
       sx={{
         width: "80%",
-        height: "80%",
-        margin: "50px auto",
+        margin: "auto auto",
+        padding: "30px",
         color: `${shades.primary[100]}`,
         borderRadius: "0 10px 10px 0",
       }}
-    > 
-      <Header/>
+    >
+      <Header />
       <Box
         sx={{
           width: "100%",

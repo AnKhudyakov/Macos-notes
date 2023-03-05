@@ -76,6 +76,7 @@ function NoteEditor() {
   return (
     <Box
     display= {isListView ? "block" : "none"}
+    overflow="auto"
       sx={{
         width:"100%",
         //minHeight: "300px",

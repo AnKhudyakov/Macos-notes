@@ -1,7 +1,6 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Divider, Typography,useMediaQuery } from "@mui/material";
 import { shades } from "../../theme";
 import moment from "moment";
-//import Highlighter from 'react-highlighter';
 import { EditorState, ContentState } from "draft-js";
 import { NoteContext } from "../../context";
 import { NoteContextType, INote } from "../../types/notes";
@@ -32,16 +31,18 @@ const getTitleAndDescription = (noteContent: EditorState) => {
 
 function NoteItem({ note }: NoteItemProps) {
   const { title, description } = getTitleAndDescription(note.content);
-  const { setActive } = useContext(NoteContext) as NoteContextType;
+  const { setActive,isListView,activeNoteId } = useContext(NoteContext) as NoteContextType;
 
+  const isNonMobile = useMediaQuery("(min-width:600px)");
   return (
     <Box
       onClick={() => setActive(note.id)}
+      height={!isNonMobile?"90px":isListView ? "60px" : "200px"}
       sx={{
         margin: 1.5,
-        height: "60px",
         borderRadius: 1.5,
-        bgcolor: "secondary.dark",
+        bgcolor: activeNoteId==note.id?"secondary.main":"secondary.dark",
+
         "&:hover": {
           cursor: "pointer",
           bgcolor: "secondary.main",
@@ -50,10 +51,10 @@ function NoteItem({ note }: NoteItemProps) {
       }}
     >
       <Box
+      height={isListView || !isNonMobile? "50px" : "200px"}
         sx={{
           display: "block",
           padding: "5px",
-          height: "50px",
           width: "100%",
           margin: "0px auto",
           color: `${shades.primary[100]}`,
@@ -65,14 +66,14 @@ function NoteItem({ note }: NoteItemProps) {
           {description || "No addition text"}{" "}
         </Typography>
       </Box>
-      <Box
+      <Divider
         sx={{
-          height: "5px",
+          height:2,
           width: "80%",
-          margin: "0px auto",
-          borderBottom: `1px solid ${shades.secondary[400]}`,
+          margin: !isNonMobile?"39px auto":"9px auto",
+          bgcolor: `${shades.secondary[500]}`,
         }}
-      ></Box>
+      ></Divider>
     </Box>
   );
 }

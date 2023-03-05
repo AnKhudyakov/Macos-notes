@@ -52,6 +52,9 @@ const FormatButton = ({ isOpen }: FormatButtonProps) => {
   return isOpen ? (
     <Box
       sx={{
+        position:"absolute",
+        top:80,
+        left:"50%",
         width: "100%",
         maxWidth: 200,
         maxHeight:300,
@@ -96,7 +99,7 @@ const FormatButton = ({ isOpen }: FormatButtonProps) => {
       </nav>
     </Box>
   ) : (
-    <Box></Box>
+    <Box width={0}></Box>
   );
 };
 

@@ -19,6 +19,7 @@ import { NoteContextType, INote } from "../../types/notes";
 import { useContext, useState } from "react";
 import FormatButton from "./FormatButton";
 import TextFormatIcon from "@mui/icons-material/TextFormat";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 function Header() {
   const [focus, setFocus] = useState<boolean>(false);
@@ -31,7 +32,8 @@ function Header() {
     searchKeyword,
     isOpenFormat,
     setIsOpenFormat,
-    setIsListView
+    isListView,
+    setIsListView,
   } = useContext(NoteContext) as NoteContextType;
 
   const addNewNote = () => {
@@ -96,28 +98,30 @@ function Header() {
     },
   }));
 
+  const isNonMobile = useMediaQuery("(min-width:600px)");
+
   return (
     <Box
       sx={{
         width: "100%",
-        height: 50,
+        height: !isNonMobile ? 100 : 50,
         margin: "0px",
-        display: "flex",
+        display: !isNonMobile ? "block" : "flex",
         borderRadius: "0 10px 0px 0",
-        bgcolor: "primary.dark",
+        bgcolor: "secondary.dark",
         "&:hover": {
-          borderBottom: `1px solid ${shades.secondary[400]}`,
+          borderBottom: `1px solid ${shades.secondary[600]}`,
         },
       }}
     >
       <Box
         sx={{
-          minWidth: "200px",
+          minWidth: "214px",
           margin: "0px",
           display: "flex",
           justifyContent: "space-between",
-          bgcolor: "secondary.dark",
-          borderRight: `1px solid ${shades.secondary[600]}`,
+
+          //borderRight: `1px solid ${shades.secondary[400]}`,
         }}
       >
         <Box sx={{ display: "flex" }}>
@@ -130,15 +134,26 @@ function Header() {
               }}
             />
           </IconButton>
-          <IconButton onClick={() => setIsListView(false)}
-          >
+          <IconButton onClick={() => setIsListView(false)}>
             <GridViewIcon
               sx={{
-                margin: "0px 4px",
+                margin: "0px 10px",
                 color: `${shades.primary[100]}`,
               }}
             />
           </IconButton>
+
+          {!isListView && (
+            <IconButton onClick={() => setIsListView(false)} disabled={activeNoteId?false:true}>
+              <ArrowBackIosIcon
+                sx={{
+                  margin: "0px 10px",
+                  color: `${shades.primary[100]}`,
+                  opacity: activeNoteId?1:0.5
+                }}
+              />
+            </IconButton>
+          )}
         </Box>
         <IconButton onClick={removeCurrentNote}>
           <DeleteOutlineIcon
@@ -155,40 +170,52 @@ function Header() {
           />
         </IconButton>
       </Box>
-
+      <Divider
+        sx={{ height: isNonMobile?1:"1px", width: isNonMobile?"1px":1, bgcolor: `${shades.secondary[600]}` }}
+        orientation={isNonMobile?"vertical":"horizontal"}
+      />
       <Box
         sx={{
-          width: "77%",
+          width: 1,
           borderRadius: "0 10px 0 0",
           display: "flex",
           justifyContent: "space-between",
-
         }}
       >
-        <Box sx={{ textAlign: "center", width: "100%" }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            width: "100%",
+          }}
+        >
           <IconButton onClick={addNewNote}>
             <BorderColorIcon
               fontSize="medium"
               sx={{
-                margin: "2px 5px 0",
+                m: "0 10px",
                 color: `${shades.primary[100]}`,
               }}
             />
           </IconButton>
-          <IconButton
-            onClick={() => setIsOpenFormat(!isOpenFormat)}
-            sx={{ textAlign: "center" }}
-            //onClick={() => dispatch(setIsCartOpen({}))}
-          >
-            <TextFormatIcon
-              fontSize="large"
-              sx={{
-                paddingTop: "5px",
-                color: `${shades.primary[100]}`,
-              }}
-            />
-          </IconButton>
-          <FormatButton isOpen={isOpenFormat} />
+          <Box>
+            <IconButton
+              disabled={activeNoteId?false:true}
+              onClick={() => setIsOpenFormat(!isOpenFormat)}
+              sx={{ textAlign: "center" }}
+              //onClick={() => dispatch(setIsCartOpen({}))}
+            >
+              <TextFormatIcon
+                fontSize="large"
+                sx={{
+                  m: "5px 5px 0 5px",
+                  color: `${shades.primary[100]}`,
+                  opacity: activeNoteId?1:0.5
+                }}
+              />
+            </IconButton>
+            <FormatButton isOpen={isOpenFormat} />
+          </Box>
         </Box>
         <Search>
           <SearchIconWrapper>

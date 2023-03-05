@@ -5,22 +5,36 @@ import { NoteContext } from "../../context";
 import { NoteContextType, INote } from "../../types/notes";
 import { useContext } from "react";
 import { Typography } from "@mui/material";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 function NoteList() {
-  const { notes, keyword, sortedAndSearchedNotes, isListView } = useContext(
+  const { notes, keyword, sortedAndSearchedNotes, isListView,activeNoteId,setActive } = useContext(
     NoteContext
   ) as NoteContextType;
 
-  console.log(isListView);
+  const onClickNoteList = (()=>{
+    if(activeNoteId)setActive("")
+  })
 
+  const isNonMobile = useMediaQuery("(min-width:600px)");
   return (
-    <Box
-    minWidth= {isListView ? "200px" : "100%"}
+    <Box onClick={()=>activeNoteId?setActive(""):null}
+      minWidth={
+        !isNonMobile && isListView ? "100px" : isListView ? "215px" : "100%"
+      }
+      display={isListView ||!isNonMobile? "block" : "grid"}
+      overflow="auto"
+      gap="15px"
+      gridTemplateColumns="repeat(auto-fill, 200px)"
+      gridTemplateRows={!isNonMobile?"repeat(auto-fill, 100px)":"repeat(auto-fill, 200px)"}
+      justifyContent="space-around"
+      rowGap="20px"
+      columnGap="2.33%"
       sx={{
-        minHeight: "300px",
-        borderRight: isListView ?`1px solid ${shades.secondary[600]}`:"0",
+        borderRight: isListView ? `1px solid ${shades.secondary[600]}` : "0",
         borderRadius: isListView ? "0" : "0 0 10px 0",
         bgcolor: "secondary.dark",
+        "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
       }}
     >
       {!notes.length && (
