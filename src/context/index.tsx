@@ -36,6 +36,7 @@ export const NoteProvider = ({ children }: NoteProviderProps) => {
   >(null);
   const [isOpenFormat, setIsOpenFormat] = useState<boolean>(false);
   const [isListView, setIsListView] = useState<boolean>(true);
+  const [isEditorShow, setIsEditorShow] = useState<boolean>(false);
   const createNote = () => {
     const newNote: INote = {
       id: faker.datatype.uuid(),
@@ -131,6 +132,8 @@ export const NoteProvider = ({ children }: NoteProviderProps) => {
         toggleBlockType,
         isListView,
         setIsListView,
+        isEditorShow,
+        setIsEditorShow
       }}
     >
       {children}

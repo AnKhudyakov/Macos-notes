@@ -20,4 +20,6 @@ export type NoteContextType = {
   toggleBlockType: (blockType: string) => void;
   isListView: boolean;
   setIsListView: Dispatch<React.SetStateAction<boolean>>;
+  isEditorShow: boolean;
+  setIsEditorShow: Dispatch<React.SetStateAction<boolean>>;
 };

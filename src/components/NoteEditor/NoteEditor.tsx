@@ -15,7 +15,7 @@ import {
 import { Typography } from "@mui/material";
 
 function NoteEditor() {
-  const { activeNoteId, updateNote, getActive ,isListView} = useContext(
+  const { activeNoteId, updateNote, getActive ,isListView,isEditorShow} = useContext(
     NoteContext
   ) as NoteContextType;
   const note = getActive();
@@ -75,7 +75,7 @@ function NoteEditor() {
 
   return (
     <Box
-    display= {isListView ? "block" : "none"}
+    display= {isListView||isEditorShow ? "block" : "none"}
     overflow="auto"
       sx={{
         width:"100%",

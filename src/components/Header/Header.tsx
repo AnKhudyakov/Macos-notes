@@ -34,6 +34,8 @@ function Header() {
     setIsOpenFormat,
     isListView,
     setIsListView,
+    isEditorShow,
+    setIsEditorShow
   } = useContext(NoteContext) as NoteContextType;
 
   const addNewNote = () => {
@@ -144,12 +146,12 @@ function Header() {
           </IconButton>
 
           {!isListView && (
-            <IconButton onClick={() => setIsListView(false)} disabled={activeNoteId?false:true}>
+            <IconButton onClick={() => setIsEditorShow(false)} disabled={isEditorShow?false:true}>
               <ArrowBackIosIcon
                 sx={{
                   margin: "0px 10px",
                   color: `${shades.primary[100]}`,
-                  opacity: activeNoteId?1:0.5
+                  opacity: isEditorShow?1:0.5
                 }}
               />
             </IconButton>
@@ -200,7 +202,7 @@ function Header() {
           </IconButton>
           <Box>
             <IconButton
-              disabled={activeNoteId?false:true}
+              disabled={isEditorShow||isListView?false:true}
               onClick={() => setIsOpenFormat(!isOpenFormat)}
               sx={{ textAlign: "center" }}
               //onClick={() => dispatch(setIsCartOpen({}))}
@@ -210,7 +212,7 @@ function Header() {
                 sx={{
                   m: "5px 5px 0 5px",
                   color: `${shades.primary[100]}`,
-                  opacity: activeNoteId?1:0.5
+                  opacity: isEditorShow||isListView?1:0.5
                 }}
               />
             </IconButton>

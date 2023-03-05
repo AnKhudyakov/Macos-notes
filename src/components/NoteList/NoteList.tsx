@@ -8,25 +8,33 @@ import { Typography } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 function NoteList() {
-  const { notes, keyword, sortedAndSearchedNotes, isListView,activeNoteId,setActive } = useContext(
-    NoteContext
-  ) as NoteContextType;
-
-  const onClickNoteList = (()=>{
-    if(activeNoteId)setActive("")
-  })
+  const {
+    notes,
+    keyword,
+    sortedAndSearchedNotes,
+    isListView,
+    activeNoteId,
+    setActive,
+    isEditorShow,
+    setIsEditorShow,
+  } = useContext(NoteContext) as NoteContextType;
 
   const isNonMobile = useMediaQuery("(min-width:600px)");
   return (
-    <Box onClick={()=>activeNoteId?setActive(""):null}
+    <Box
+      onClick={() => (activeNoteId && !isListView ? setActive("") : null)}
       minWidth={
         !isNonMobile && isListView ? "100px" : isListView ? "215px" : "100%"
       }
-      display={isListView ||!isNonMobile? "block" : "grid"}
+      display={
+        isEditorShow ? "none" : isListView || !isNonMobile ? "block" : "grid"
+      }
       overflow="auto"
       gap="15px"
       gridTemplateColumns="repeat(auto-fill, 200px)"
-      gridTemplateRows={!isNonMobile?"repeat(auto-fill, 100px)":"repeat(auto-fill, 200px)"}
+      gridTemplateRows={
+        !isNonMobile ? "repeat(auto-fill, 100px)" : "repeat(auto-fill, 200px)"
+      }
       justifyContent="space-around"
       rowGap="20px"
       columnGap="2.33%"

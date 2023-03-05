@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Typography,useMediaQuery } from "@mui/material";
+import { Box, Button, Divider, Typography, useMediaQuery } from "@mui/material";
 import { shades } from "../../theme";
 import moment from "moment";
 import { EditorState, ContentState } from "draft-js";
@@ -31,17 +31,25 @@ const getTitleAndDescription = (noteContent: EditorState) => {
 
 function NoteItem({ note }: NoteItemProps) {
   const { title, description } = getTitleAndDescription(note.content);
-  const { setActive,isListView,activeNoteId } = useContext(NoteContext) as NoteContextType;
+  const { setActive, isListView, activeNoteId,setIsEditorShow } = useContext(
+    NoteContext
+  ) as NoteContextType;
+
+  const onOpenEditor = (()=>{
+    setActive(note.id)
+    setIsEditorShow(true)
+  })
 
   const isNonMobile = useMediaQuery("(min-width:600px)");
   return (
     <Box
+      onDoubleClick={onOpenEditor}
       onClick={() => setActive(note.id)}
-      height={!isNonMobile?"90px":isListView ? "60px" : "200px"}
+      height={!isNonMobile ? "90px" : isListView ? "60px" : "200px"}
       sx={{
         margin: 1.5,
         borderRadius: 1.5,
-        bgcolor: activeNoteId==note.id?"secondary.main":"secondary.dark",
+        bgcolor: activeNoteId == note.id ? "secondary.main" : "secondary.dark",
 
         "&:hover": {
           cursor: "pointer",
@@ -51,12 +59,13 @@ function NoteItem({ note }: NoteItemProps) {
       }}
     >
       <Box
-      height={isListView || !isNonMobile? "50px" : "200px"}
+        height={isListView || !isNonMobile? "50px" : "50px"}
         sx={{
+          textAlign:isListView?"":"center",
           display: "block",
           padding: "5px",
           width: "100%",
-          margin: "0px auto",
+          margin: isListView?"0px auto":"5px auto",
           color: `${shades.primary[100]}`,
         }}
       >
@@ -68,9 +77,9 @@ function NoteItem({ note }: NoteItemProps) {
       </Box>
       <Divider
         sx={{
-          height:2,
+          height: 2,
           width: "80%",
-          margin: !isNonMobile?"39px auto":"9px auto",
+          margin: !isNonMobile ? "39px auto" : "9px auto",
           bgcolor: `${shades.secondary[500]}`,
         }}
       ></Divider>
