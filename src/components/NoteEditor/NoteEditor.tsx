@@ -15,9 +15,8 @@ import {
 import { Typography } from "@mui/material";
 
 function NoteEditor() {
-  const { activeNoteId, updateNote, getActive ,isListView,isEditorShow} = useContext(
-    NoteContext
-  ) as NoteContextType;
+  const { activeNoteId, updateNote, getActive, isListView, isEditorShow } =
+    useContext(NoteContext) as NoteContextType;
   const note = getActive();
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
@@ -34,11 +33,11 @@ function NoteEditor() {
   }, []);
 
   const displayTime = () => {
-    const time = moment(note?.createdAt).format('MMMM DD, YYYY \\at HH:mm');
+    const time = moment(note?.createdAt).format("MMMM DD, YYYY \\at HH:mm");
     return time;
-  }
+  };
 
-  const keyBindingFn = (event:any) => {
+  const keyBindingFn = (event: any) => {
     if (KeyBindingUtil.hasCommandModifier(event) && event.keyCode === 66) {
       return "text-bold";
     }
@@ -66,44 +65,39 @@ function NoteEditor() {
     return "not-handled";
   };
 
-  const onChange = ((editorState:EditorState)=>{
-    if (note){
-      updateNote(note.id, editorState)
+  const onChange = (editorState: EditorState) => {
+    if (note) {
+      updateNote(note.id, editorState);
     }
-  }
- )
+  };
 
   return (
     <Box
-    display= {isListView||isEditorShow ? "block" : "none"}
-    overflow="auto"
+      display={isListView || isEditorShow ? "block" : "none"}
+      overflow="auto"
       sx={{
-        width:"100%",
-        //minHeight: "300px",
+        width: "100%",
         margin: "0px",
-        padding:"10px",
+        padding: "10px",
         borderRadius: "0 0 10px 0",
         bgcolor: "primary.dark",
         color: `${shades.primary[100]}`,
-      
       }}
     >
-      <Typography sx={{textAlign: "center"}} >
-           { displayTime() }
-           </Typography>
+      <Typography sx={{ textAlign: "center" }}>{displayTime()}</Typography>
 
-        <EditorContext.Provider value={editorState} key={note?.id}>
-          {note&&
+      <EditorContext.Provider value={editorState} key={note?.id}>
+        {note && (
           <Editor
-          placeholder="Click here to start typing in the editor..."
+            placeholder="Click here to start typing in the editor..."
             editorState={note.content}
             onChange={onChange}
             keyBindingFn={keyBindingFn}
             handleKeyCommand={handleKeyCommand}
             ref={editor}
-          ></Editor>}
-        </EditorContext.Provider>
-    
+          ></Editor>
+        )}
+      </EditorContext.Provider>
     </Box>
   );
 }

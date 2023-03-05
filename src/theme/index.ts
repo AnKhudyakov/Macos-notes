@@ -45,8 +45,8 @@ export const theme = createTheme({
       main: shades.secondary[500],
     },
     action: {
-      active: '#fff',
-   },
+      active: "#fff",
+    },
   },
   typography: {
     fontFamily: ["Fauna One", "sans-serif"].join(","),

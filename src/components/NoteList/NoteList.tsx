@@ -22,7 +22,7 @@ function NoteList() {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   return (
     <Box
-      onClick={() => (activeNoteId && !isListView ? setActive("") : null)}
+      //onClick={() => (activeNoteId && !isListView ? setActive("") : null)}
       minWidth={
         !isNonMobile && isListView ? "100px" : isListView ? "215px" : "100%"
       }

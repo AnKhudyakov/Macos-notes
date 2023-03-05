@@ -35,7 +35,7 @@ function Header() {
     isListView,
     setIsListView,
     isEditorShow,
-    setIsEditorShow
+    setIsEditorShow,
   } = useContext(NoteContext) as NoteContextType;
 
   const addNewNote = () => {
@@ -146,12 +146,15 @@ function Header() {
           </IconButton>
 
           {!isListView && (
-            <IconButton onClick={() => setIsEditorShow(false)} disabled={isEditorShow?false:true}>
+            <IconButton
+              onClick={() => setIsEditorShow(false)}
+              disabled={isEditorShow ? false : true}
+            >
               <ArrowBackIosIcon
                 sx={{
                   margin: "0px 10px",
                   color: `${shades.primary[100]}`,
-                  opacity: isEditorShow?1:0.5
+                  opacity: isEditorShow ? 1 : 0.5,
                 }}
               />
             </IconButton>
@@ -173,8 +176,12 @@ function Header() {
         </IconButton>
       </Box>
       <Divider
-        sx={{ height: isNonMobile?1:"1px", width: isNonMobile?"1px":1, bgcolor: `${shades.secondary[600]}` }}
-        orientation={isNonMobile?"vertical":"horizontal"}
+        sx={{
+          height: isNonMobile ? 1 : "1px",
+          width: isNonMobile ? "1px" : 1,
+          bgcolor: `${shades.secondary[600]}`,
+        }}
+        orientation={isNonMobile ? "vertical" : "horizontal"}
       />
       <Box
         sx={{
@@ -202,7 +209,7 @@ function Header() {
           </IconButton>
           <Box>
             <IconButton
-              disabled={isEditorShow||isListView?false:true}
+              disabled={isEditorShow || isListView ? false : true}
               onClick={() => setIsOpenFormat(!isOpenFormat)}
               sx={{ textAlign: "center" }}
               //onClick={() => dispatch(setIsCartOpen({}))}
@@ -212,7 +219,7 @@ function Header() {
                 sx={{
                   m: "5px 5px 0 5px",
                   color: `${shades.primary[100]}`,
-                  opacity: isEditorShow||isListView?1:0.5
+                  opacity: isEditorShow || isListView ? 1 : 0.5,
                 }}
               />
             </IconButton>

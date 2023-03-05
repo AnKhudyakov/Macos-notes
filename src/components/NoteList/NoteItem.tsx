@@ -1,7 +1,7 @@
 import { Box, Button, Divider, Typography, useMediaQuery } from "@mui/material";
 import { shades } from "../../theme";
 import moment from "moment";
-import { EditorState, ContentState } from "draft-js";
+import { EditorState } from "draft-js";
 import { NoteContext } from "../../context";
 import { NoteContextType, INote } from "../../types/notes";
 import { useContext } from "react";
@@ -31,41 +31,68 @@ const getTitleAndDescription = (noteContent: EditorState) => {
 
 function NoteItem({ note }: NoteItemProps) {
   const { title, description } = getTitleAndDescription(note.content);
-  const { setActive, isListView, activeNoteId,setIsEditorShow } = useContext(
+  const { setActive, isListView, activeNoteId, setIsEditorShow } = useContext(
     NoteContext
   ) as NoteContextType;
 
-  const onOpenEditor = (()=>{
-    setActive(note.id)
-    setIsEditorShow(true)
-  })
+  const onOpenEditor = () => {
+    setActive(note.id);
+    setIsEditorShow(true);
+  };
 
   const isNonMobile = useMediaQuery("(min-width:600px)");
+
   return (
     <Box
-      onDoubleClick={onOpenEditor}
-      onClick={() => setActive(note.id)}
+      onClick={() => (isListView ? setActive(note.id) : undefined)}
       height={!isNonMobile ? "90px" : isListView ? "60px" : "200px"}
       sx={{
         margin: 1.5,
         borderRadius: 1.5,
-        bgcolor: activeNoteId == note.id ? "secondary.main" : "secondary.dark",
+        bgcolor:
+          isListView && activeNoteId == note.id
+            ? "secondary.main"
+            : "secondary.dark",
 
         "&:hover": {
-          cursor: "pointer",
-          bgcolor: "secondary.main",
-          opacity: [0.9, 0.8, 0.7],
+          cursor: isListView ? "pointer" : "arrow",
+          bgcolor: isListView ? "secondary.main" : "secondary.dark",
+          opacity: isListView ? [0.9, 0.8, 0.7] : 1,
         },
       }}
     >
+      {!isListView && (
+        <Box
+          height={0.5}
+          width={1}
+          onClick={() => setActive(note.id)}
+          onDoubleClick={!isListView ? onOpenEditor : undefined}
+          sx={{
+            mt: 2,
+            bgcolor:
+              activeNoteId == note.id ? "secondary.main" : "primary.dark",
+            borderRadius: "5px",
+            fontSize: "10px",
+            overflow: "hidden",
+            "&:hover": {
+              cursor: "pointer",
+              bgcolor: "secondary.main",
+              opacity: [0.9, 0.8, 0.7],
+            },
+          }}
+        >
+          {note.content.getCurrentContent().getPlainText()}
+        </Box>
+      )}
+
       <Box
-        height={isListView || !isNonMobile? "50px" : "50px"}
+        height={isListView || !isNonMobile ? "50px" : "50px"}
         sx={{
-          textAlign:isListView?"":"center",
+          textAlign: isListView ? "" : "center",
           display: "block",
           padding: "5px",
           width: "100%",
-          margin: isListView?"0px auto":"5px auto",
+          margin: isListView ? "0px auto" : "5px auto",
           color: `${shades.primary[100]}`,
         }}
       >

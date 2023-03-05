@@ -71,7 +71,7 @@ export const NoteProvider = ({ children }: NoteProviderProps) => {
   const setActive = (id: string) => {
     setActiveNoteId(id);
   };
-  
+
   const getActive = () => {
     let anctiveNote: INote | undefined;
     if (activeNoteId) {
@@ -133,7 +133,7 @@ export const NoteProvider = ({ children }: NoteProviderProps) => {
         isListView,
         setIsListView,
         isEditorShow,
-        setIsEditorShow
+        setIsEditorShow,
       }}
     >
       {children}

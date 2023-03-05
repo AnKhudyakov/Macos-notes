@@ -16,7 +16,6 @@ import { NoteContext } from "../../context";
 import { NoteContextType, INote } from "../../types/notes";
 import { useContext, useState } from "react";
 
-
 const formats = [
   {
     name: "header-one",
@@ -52,15 +51,15 @@ const FormatButton = ({ isOpen }: FormatButtonProps) => {
   return isOpen ? (
     <Box
       sx={{
-        position:"absolute",
-        top:80,
-        left:"50%",
+        position: "absolute",
+        top: 80,
+        left: "50%",
         width: "100%",
         maxWidth: 200,
-        maxHeight:300,
-        margin:"0 auto",
+        maxHeight: 300,
+        margin: "0 auto",
         bgcolor: `background.paper`,
-        textAlign:"center",
+        textAlign: "center",
         borderRadius: "5px",
       }}
     >
@@ -78,16 +77,17 @@ const FormatButton = ({ isOpen }: FormatButtonProps) => {
       </nav>
       <Divider /> */}
       <nav aria-label="primary mailbox folders">
-        <List sx={{
-        bgcolor: `${shades.primary[400]}`,
-      }}>
+        <List
+          sx={{
+            bgcolor: `${shades.primary[400]}`,
+          }}
+        >
           {formats.map((format) => (
             <ListItem disablePadding key={format.name}>
               <ListItemButton
                 onClick={(e) => {
                   e.stopPropagation();
                   e.preventDefault();
-                  console.log(1);
                   toggleBlockType(format.name);
                 }}
               >
