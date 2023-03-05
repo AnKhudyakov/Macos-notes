@@ -69,8 +69,13 @@ function NoteItem({ note }: NoteItemProps) {
           onDoubleClick={!isListView ? onOpenEditor : undefined}
           sx={{
             mt: 2,
+            padding:"10px",
             bgcolor:
               activeNoteId == note.id ? "secondary.main" : "primary.dark",
+            border:
+              activeNoteId == note.id
+                ? `1px solid ${shades.secondary[300]}`
+                : `1px solid ${shades.primary[400]}`,
             borderRadius: "5px",
             fontSize: "10px",
             overflow: "hidden",
@@ -99,17 +104,17 @@ function NoteItem({ note }: NoteItemProps) {
         <Typography variant="h3">{title || "New Note"}</Typography>
         <Typography variant="h4">
           {getDateText(note.updatedAt)}
-          {description || "No addition text"}{" "}
+          {isListView ? description || "No addition text" : ""}{" "}
         </Typography>
       </Box>
-      <Divider
+      {isListView&&<Divider
         sx={{
           height: 2,
           width: "80%",
           margin: !isNonMobile ? "39px auto" : "9px auto",
           bgcolor: `${shades.secondary[500]}`,
         }}
-      ></Divider>
+      ></Divider>}
     </Box>
   );
 }

@@ -4,8 +4,12 @@ import {
   Button,
   Divider,
   IconButton,
-  Typography,
   useMediaQuery,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
 } from "@mui/material";
 import ListIcon from "@mui/icons-material/List";
 import GridViewIcon from "@mui/icons-material/GridView";
@@ -23,11 +27,11 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 function Header() {
   const [focus, setFocus] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false);
   const {
     activeNoteId,
     keyword,
     createNote,
-    getActive,
     removeNote,
     searchKeyword,
     isOpenFormat,
@@ -59,6 +63,16 @@ function Header() {
   const onBlur = () => {
     setFocus(false);
     searchKeyword("");
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+    console.log("OPENClick", open);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    console.log("CloSEClick", open);
   };
 
   const Search = styled("div")(({ theme }) => ({
@@ -122,8 +136,6 @@ function Header() {
           margin: "0px",
           display: "flex",
           justifyContent: "space-between",
-
-          //borderRight: `1px solid ${shades.secondary[400]}`,
         }}
       >
         <Box sx={{ display: "flex" }}>
@@ -160,20 +172,36 @@ function Header() {
             </IconButton>
           )}
         </Box>
-        <IconButton onClick={removeCurrentNote}>
+        <IconButton onClick={handleClickOpen}>
           <DeleteOutlineIcon
             fontSize="large"
             sx={{
               margin: "0px 4px",
               color: `${shades.primary[100]}`,
-              //   "&:hover": {
-              //     borderRadius:2,
-              //     bgcolor: "secondary.main",
-              //     opacity: [0.9, 0.8, 0.7],
-              //  },
             }}
           />
         </IconButton>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Are you sure you want to delete the note permanently?"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              You cannot undo this action.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button onClick={removeCurrentNote} autoFocus>
+              Delete
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Box>
       <Divider
         sx={{

@@ -36,7 +36,7 @@ function NoteList() {
         !isNonMobile ? "repeat(auto-fill, 100px)" : "repeat(auto-fill, 200px)"
       }
       justifyContent="space-around"
-      rowGap="20px"
+      rowGap="0px"
       columnGap="2.33%"
       sx={{
         borderRight: isListView ? `1px solid ${shades.secondary[600]}` : "0",
