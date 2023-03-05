@@ -3,7 +3,7 @@ import Header from "./Header/Header";
 import NoteEditor from "./NoteEditor/NoteEditor";
 import NoteList from "./NoteList/NoteList";
 import { NoteContext } from "../context";
-import { NoteContextType, INote } from "../types/notes";
+import { NoteContextType, INote } from "../react-app-env";
 import { useContext } from "react";
 import { shades } from "../theme";
 

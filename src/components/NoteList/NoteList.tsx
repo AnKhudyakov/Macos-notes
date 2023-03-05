@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import { shades } from "../../theme";
 import NoteItem from "./NoteItem";
 import { NoteContext } from "../../context";
-import { NoteContextType, INote } from "../../types/notes";
+import { NoteContextType, INote } from "../../react-app-env";
 import { useContext } from "react";
 import { Typography } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";

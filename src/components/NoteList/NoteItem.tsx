@@ -1,9 +1,9 @@
-import { Box, Button, Divider, Typography, useMediaQuery } from "@mui/material";
+import { Box, Divider, Typography, useMediaQuery } from "@mui/material";
 import { shades } from "../../theme";
 import moment from "moment";
 import { EditorState } from "draft-js";
 import { NoteContext } from "../../context";
-import { NoteContextType, INote } from "../../types/notes";
+import { NoteContextType, INote } from "../../react-app-env";
 import { useContext } from "react";
 
 type NoteItemProps = {

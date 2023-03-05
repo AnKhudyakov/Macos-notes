@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { NoteContextType, INote } from "../types/notes";
+import { NoteContextType, INote } from "../react-app-env";
 import React, { useState } from "react";
 import { faker } from "@faker-js/faker";
 import { EditorState, ContentState } from "draft-js";
@@ -93,7 +93,7 @@ export const NoteProvider = ({ children }: NoteProviderProps) => {
   };
 
   const getSortedNotes = (notes: INote[]) => {
-    notes.sort((n1, n2) => n2.updatedAt - n1.updatedAt);
+    notes.sort((n1, n2) => +n2.updatedAt - +n1.updatedAt);
     return notes;
   };
 

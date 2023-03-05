@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import { shades } from "../../theme";
 import { NoteContext } from "../../context";
-import { NoteContextType, INote } from "../../types/notes";
+import { NoteContextType, INote } from "../../react-app-env";
 import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import moment from "moment";
 import { EditorContext } from "../../context/EditorContext";
@@ -37,7 +37,7 @@ function NoteEditor() {
     return time;
   };
 
-  const keyBindingFn = (event: any) => {
+  const keyBindingFn = (event: React.KeyboardEvent<{}>):string | null=> {
     if (KeyBindingUtil.hasCommandModifier(event) && event.keyCode === 66) {
       return "text-bold";
     }
@@ -50,7 +50,7 @@ function NoteEditor() {
     return getDefaultKeyBinding(event);
   };
 
-  const handleKeyCommand = (command: string, editorState: any) => {
+  const handleKeyCommand = (command: string, editorState: EditorState) => {
     let nextState;
     if (command === "text-bold")
       nextState = RichUtils.toggleInlineStyle(editorState, "BOLD");

@@ -19,7 +19,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import { NoteContext } from "../../context";
-import { NoteContextType, INote } from "../../types/notes";
+import { NoteContextType, INote } from "../../react-app-env";
 import { useContext, useState } from "react";
 import FormatButton from "./FormatButton";
 import TextFormatIcon from "@mui/icons-material/TextFormat";
@@ -67,12 +67,10 @@ function Header() {
 
   const handleClickOpen = () => {
     setOpen(true);
-    console.log("OPENClick", open);
   };
 
   const handleClose = () => {
     setOpen(false);
-    console.log("CloSEClick", open);
   };
 
   const Search = styled("div")(({ theme }) => ({

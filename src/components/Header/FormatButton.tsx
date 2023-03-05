@@ -1,20 +1,14 @@
 import { shades } from "../../theme";
 import {
   Box,
-  Button,
-  Divider,
-  IconButton,
-  Typography,
-  useMediaQuery,
   List,
   ListItem,
   ListItemButton,
-  ListItemIcon,
   ListItemText,
 } from "@mui/material";
 import { NoteContext } from "../../context";
-import { NoteContextType, INote } from "../../types/notes";
-import { useContext, useState } from "react";
+import { NoteContextType, INote } from "../../react-app-env";
+import { useContext } from "react";
 
 const formats = [
   {
