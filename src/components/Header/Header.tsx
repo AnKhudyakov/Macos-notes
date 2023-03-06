@@ -47,6 +47,7 @@ function Header() {
   };
 
   const removeCurrentNote = () => {
+    setOpen(false);
     removeNote(activeNoteId);
   };
 

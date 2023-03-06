@@ -5,6 +5,7 @@ import { EditorState } from "draft-js";
 import { NoteContext } from "../../context";
 import { NoteContextType, INote } from "../../react-app-env";
 import { useContext } from "react";
+import Highlighter from "react-highlight-words";
 
 type NoteItemProps = {
   note: INote;
@@ -24,17 +25,19 @@ const getDateText = (date: moment.MomentInput) => {
 const getTitleAndDescription = (noteContent: EditorState) => {
   const content = noteContent.getCurrentContent().getPlainText();
   const textArray = content.split("\n");
-  const title = textArray[0] !== "" ? textArray[0] : null;
+  let title = textArray[0] !== "" ? textArray[0] : null;
+  if (title?.length){
+    title = title.length>17? title.slice(0,17)+"...":title
+  }
   const description = (textArray.length > 0 && textArray[1]) || null;
   return { title, description };
 };
 
 function NoteItem({ note }: NoteItemProps) {
   const { title, description } = getTitleAndDescription(note.content);
-  const { setActive, isListView, activeNoteId, setIsEditorShow } = useContext(
+  const { setActive, isListView, activeNoteId, setIsEditorShow,keyword } = useContext(
     NoteContext
   ) as NoteContextType;
-
   const onOpenEditor = () => {
     setActive(note.id);
     setIsEditorShow(true);
@@ -101,10 +104,19 @@ function NoteItem({ note }: NoteItemProps) {
           color: `${shades.primary[100]}`,
         }}
       >
-        <Typography variant="h3">{title || "New Note"}</Typography>
+        <Typography variant="h3">
+        <Highlighter
+    searchWords={[keyword]}
+    autoEscape={true}
+    textToHighlight={title || "New Note"}
+  /></Typography>
         <Typography variant="h4">
           {getDateText(note.updatedAt)}
-          {isListView ? description || "No addition text" : ""}{" "}
+          <Highlighter
+    searchWords={[keyword]}
+    autoEscape={true}
+    textToHighlight={isListView ? description || " No addition text" : ""}
+  />
         </Typography>
       </Box>
       {isListView&&<Divider
